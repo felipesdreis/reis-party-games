@@ -114,6 +114,7 @@ function armTimer() {
 function goSetup() {
   clearInterval(timer);
   state = newGame();
+  $('confetti').innerHTML = '';
   render();
 }
 
