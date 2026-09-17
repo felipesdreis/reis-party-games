@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mímica</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="setup">
+  <h1>Mímica</h1>
+  <div class="howto">
+    <p><b>8 rodadas</b> · as equipes se revezam, 4 vezes cada uma.</p>
+    <p><b>5 palavras por rodada</b>, valendo de 1 a 5 pontos crescentes.</p>
+    <p><b>2 minutos</b> para adivinhar o máximo possível.</p>
+    <p>Nada de falar — só mímica e gestos!</p>
+  </div>
+  <label>Equipe 1 <input id="nameA" placeholder="Equipe A" maxlength="20"></label>
+  <label>Equipe 2 <input id="nameB" placeholder="Equipe B" maxlength="20"></label>
+  <button id="btnStart" class="primary">Começar</button>
+</section>
+
+<section id="handoff" hidden>
+  <p class="score"><span id="handoffScoreA" class="a"></span> × <span id="handoffScoreB" class="b"></span></p>
+  <h2 id="handoffTitle"></h2>
+  <p id="handoffText"></p>
+  <button id="btnRound" class="primary">Iniciar rodada</button>
+</section>
+
+<section id="playing" hidden>
+  <div id="timer">2:00</div>
+  <div id="progress"><div id="progressFill"></div></div>
+  <p id="wordLabel"></p>
+  <div id="word"></div>
+  <p id="roundScore"></p>
+  <div class="row">
+    <button id="btnSkip">Pular</button>
+    <button id="btnHit" class="primary">Acertou</button>
+  </div>
+</section>
+
+<section id="roundEnd" hidden>
+  <h2 id="roundEndTitle"></h2>
+  <p class="score"><span id="roundEndScoreA" class="a"></span> × <span id="roundEndScoreB" class="b"></span></p>
+  <button id="btnNext" class="primary">Próxima rodada</button>
+</section>
+
+<section id="gameOver" hidden>
+  <h2 id="winnerTitle"></h2>
+  <p class="score"><span id="finalScoreA" class="a"></span> × <span id="finalScoreB" class="b"></span></p>
+  <button id="btnAgain" class="primary">Jogar de novo</button>
+</section>
+
+<button id="btnHome" hidden>✕ Cancelar jogo</button>
+
+<script src="words.js"></script>
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
