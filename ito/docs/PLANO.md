@@ -25,7 +25,7 @@ O protótipo (`Ito Online.dc.html` dentro do zip) já desenha as telas e o texto
 | Revelação por QR | Host mostra QR (link do site com semente, tema e nomes no `#hash`) + botão "Compartilhar link" de reserva. Convidado abre o link, toca no próprio nome, confirma ("Você é Ana?") e vê o número; pode esconder/mostrar. Cada "Novo tema" gera QR novo; todos escaneiam de novo |
 | Confiança | Qualquer um poderia tocar em outro nome; aceito (jogo entre amigos). O host não sabe quem já viu — pergunta em voz alta |
 | Dica | Falada em voz alta, o app só instrui; nada é digitado |
-| Ordenar | Tocar nos jogadores em sequência (menor primeiro); botão Desfazer; "Revelar ordem" só quando todos posicionados |
+| Ordenar | Fila com todos os jogadores (ordem de cadastro); **arrastar** para reordenar (Pointer Events, funciona em toque e mouse); "Revelar ordem" sempre disponível. Decidido em 2026-09-16, substituindo o toque em sequência |
 | Resultado | Lista na ordem escolhida com os números; ✓/✕ entre cada par vizinho; "Ordem perfeita!" ou "Quase lá · N fora de ordem" |
 | Pontuação | **Cada rodada é isolada**, sem placar, sem vidas. "Novo tema" mantém jogadores; "Nova partida" volta ao setup |
 | Timer | Não há |
@@ -92,9 +92,8 @@ Todas recebem `state`, mutam e retornam o mesmo objeto. Sem classes.
 | `loadGuest(state, hash)` | `decodeRound`; preenche `seed`, `theme`, `players`, `secrets = drawNumbers(n, seed)`, `guest = { who: null, shown: false }`, `screen = 'guest'`. Hash inválido → não muda nada |
 | `pickGuest(state, i)` | `guest.who = i`, `guest.shown = false` |
 | `toDiscuss(state)` | `screen = 'discuss'` (botão "Todos viram" na tela share) |
-| `toArrange(state)` | `screen = 'arrange'` |
-| `pick(state, i)` | Se `i` ainda não está em `order`, push |
-| `undo(state)` | `order.pop()` |
+| `toArrange(state)` | `order = [0..n-1]` (ordem de cadastro), `screen = 'arrange'` |
+| `move(state, from, to)` | Move o item da posição `from` para `to` na fila; índices inválidos ou iguais não alteram |
 | `submitOrder(state)` | Se `order.length === players.length` → `screen = 'result'` |
 | `pairsOk(state)` | Array de booleanos: `secrets[order[k]] < secrets[order[k+1]]` para cada vizinho |
 | `errors(state)` | Quantos `false` em `pairsOk` (0 = ordem perfeita) |
@@ -118,10 +117,10 @@ Botão "Compartilhar link": `navigator.share({ url })` dentro de `try/catch`; se
    - `revealed = false`: avatar grande com inicial, "Passe o celular para" / **nome**, botão "Toque para ver seu número", nota "Confira se ninguém está olhando de lado 👀".
    - `revealed = true`: "{nome}, seu número é", número em ~96px mono azul, extremos `1 · low` / `high · 100`, botão verde "Memorizei, esconder e passar".
    - Depois do último `hide` vai direto para **discuss**.
-4. **share** (modo QR) — "Passo 3 · Escaneiem o QR code", linha `TEMA · label`. QR grande em card claro (fundo branco, para a câmera ler). Texto "Cada um aponta a câmera do celular, abre o link e toca no próprio nome." Botão secundário "Compartilhar link". Botão verde "Todos viram, continuar" → discuss. Aviso pequeno se a URL for `file://`.
+4. **share** (modo QR) — "Passo 3 · Escaneiem o QR code", linha `TEMA · label`. QR grande em card claro (fundo branco, para a câmera ler). Texto "Cada um aponta a câmera do celular, abre o link e toca no próprio nome." Botão secundário "Compartilhar link". Botão "Também jogo: ver meu número" abre o mesmo link em nova guia (`window.open`), onde o host entra como convidado e vê o próprio número, sem perder a guia do host. Botão verde "Todos viram, continuar" → discuss. Aviso pequeno se a URL for `file://`.
 5. **guest** (convidado, entra pelo hash) — card do tema com extremos. `who = null`: "Quem é você?" e um botão grande por nome. `who` escolhido e `shown = false`: "Você é {nome}?" com "Sou eu, mostrar número" e "Não, voltar". `shown = true`: "{nome}, seu número é", número gigante, extremos, botão "Esconder" (volta a `shown = false` sem perder `who`; o botão vira "Mostrar de novo"). Sem botão de sair: a pessoa fecha a aba; novo tema = novo QR.
 6. **discuss** — "Hora da dica", subtítulo "Todos já viram seu número. Devolvam o celular para a mesa." (modo local) ou "Todo mundo já viu? Então é hora da dica." (modo QR). Card roxo com o tema e extremos, parágrafo de instrução ("Cada jogador diz em voz alta uma dica dentro do tema, sem falar números…"), chips dos jogadores, botão "Organizar ordem →".
-7. **arrange** — "Organizem a ordem", subtítulo "Toque em quem tem o menor número, depois o próximo…". **Fila ordenada** (linhas numeradas 1, 2, 3… com avatar+nome, vazia no início) e **restantes** (botões grandes com avatar+nome; somem ao serem tocados). Botão "Desfazer". Botão verde "Revelar ordem" habilitado só com todos na fila.
+7. **arrange** — "Organizem a ordem", subtítulo "Arrastem os nomes: menor número no topo, maior embaixo.". **Fila** com todos (linhas numeradas por CSS counter, avatar+nome, alça ☰). Arrastar com Pointer Events: `pointerdown` marca a linha, `pointermove` usa `elementFromPoint` para saber que linha está sob o dedo e chama `move`; os nós do DOM são reordenados com `appendChild` (não recriados) para manter o pointer capture. `ponytail:` a linha pula para o slot em vez de flutuar sob o dedo. Botão verde "Revelar ordem".
 8. **result** — Card verde "🎉 Ordem perfeita!" + "Todo mundo acertou a leitura da mesa." ou vermelho "Quase lá" + "N par(es) fora de ordem — vejam os ✕." Lista na ordem escolhida (avatar, nome, número mono grande) com conector entre linhas: "✓ em ordem" verde ou "✕ fora de ordem" vermelho. Botão "Novo tema" → theme; link "Nova partida (trocar jogadores)" → setup.
 
 Botão fixo "✕ Cancelar jogo" (`btnHome`) fora de setup e guest, com `confirm`, como no mimica. Ao voltar ao setup, `history.replaceState` limpa o hash.
@@ -171,7 +170,7 @@ Array plano com campo `cat`; as categorias da tela vêm de `[...new Set(THEMES.m
   2. Tema: trocar categoria filtra a lista; 🎲 seleciona um; digitar tema próprio habilita "Começar rodada" com extremos "menor/maior".
   3. Modo local: "Passe o celular para A" → toque → número → esconder → "Passe para B"… após o último cai em "Hora da dica"; barra segmentada avança.
   4. Os números dos jogadores nunca se repetem (ver no resultado; repetir algumas rodadas).
-  5. Arrange: tocar nos nomes preenche a fila 1, 2, 3…; "Desfazer" devolve; "Revelar ordem" só habilita com todos.
+  5. Arrange: arrastar uma linha para cima/baixo (toque e mouse) reordena e a numeração acompanha; "Revelar ordem" leva ao resultado com a ordem arrastada.
   6. Result: ordem correta → card verde "Ordem perfeita!"; ordem errada → card vermelho com contagem e ✕ nos pares certos.
   7. "Novo tema" mantém os jogadores; "Nova partida" volta ao setup vazio; "✕ Cancelar jogo" pede confirmação.
   8. DevTools mobile (390px): número legível a 1 m, botões alcançáveis com o polegar, lista de temas rola sem quebrar o layout.
@@ -190,6 +189,6 @@ Array plano com campo `cat`; as categorias da tela vêm de `[...new Set(THEMES.m
 - Impedir alguém de escolher outro nome (sessão, senha por jogador).
 - Vidas / 3 rodadas com cartas cumulativas (Ito original), placar, sequência de acertos.
 - Timer, wake lock, som/vibração.
-- Arrastar e soltar na ordenação.
+- Animação de "flutuar" no arrasto (a linha segue o dedo pixel a pixel); hoje ela pula para o slot.
 - Registrar a dica digitada no app.
 - Persistência em `localStorage`, histórico, PWA/offline.

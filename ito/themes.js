@@ -1,0 +1,98 @@
+// Temas do Ito. 1 = low, 100 = high. Categorias derivadas de [...new Set(THEMES.map(t => t.cat))].
+const THEMES = [
+  // Comida e sabores
+  { cat: 'Comida e sabores', label: 'Sabor de pizza', low: 'só queijo', high: 'a mistura mais bizarra do cardápio' },
+  { cat: 'Comida e sabores', label: 'Picância de um prato', low: 'sem tempero nenhum', high: 'fogo do inferno' },
+  { cat: 'Comida e sabores', label: 'Doce ou salgado', low: 'doce puro', high: 'salgado extremo' },
+  { cat: 'Comida e sabores', label: 'Prato de boteco', low: 'tira-gosto simples', high: 'a porção mais recheada' },
+  { cat: 'Comida e sabores', label: 'Café da manhã', low: 'só um cafezinho', high: 'banquete de hotel' },
+  { cat: 'Comida e sabores', label: 'Sobremesa', low: 'uma fruta', high: 'bomba de chocolate com sorvete' },
+  { cat: 'Comida e sabores', label: 'Comida para levar no avião', low: 'discreta', high: 'todo mundo vai sentir o cheiro' },
+  { cat: 'Comida e sabores', label: 'Bebida para o calor', low: 'água', high: 'a mais exagerada' },
+  { cat: 'Comida e sabores', label: 'Comida de festa de criança', low: 'sem graça', high: 'a mais disputada' },
+  { cat: 'Comida e sabores', label: 'Coisa que combina com arroz e feijão', low: 'não combina nada', high: 'combinação perfeita' },
+
+  // Sensações e emoções
+  { cat: 'Sensações e emoções', label: 'Quão assustador é isso', low: 'nada assusta', high: 'pavor total' },
+  { cat: 'Sensações e emoções', label: 'Nível de vergonha', low: 'nenhuma vergonha', high: 'quero sumir do mapa' },
+  { cat: 'Sensações e emoções', label: 'Felicidade que isso te dá', low: 'indiferença', high: 'a maior alegria' },
+  { cat: 'Sensações e emoções', label: 'Quão constrangedor é esse momento', low: 'super natural', high: 'o pior vexame' },
+  { cat: 'Sensações e emoções', label: 'Quão relaxante é isso', low: 'estressante', high: 'paz absoluta' },
+  { cat: 'Sensações e emoções', label: 'Nível de nojo', low: 'tranquilo', high: 'não consigo nem olhar' },
+  { cat: 'Sensações e emoções', label: 'Coisa que dá saudade', low: 'nem lembro', high: 'chora só de pensar' },
+  { cat: 'Sensações e emoções', label: 'Quão irritante é esse barulho', low: 'nem percebo', high: 'quero quebrar tudo' },
+  { cat: 'Sensações e emoções', label: 'Quão romântico é isso', low: 'zero romance', high: 'cena de filme' },
+  { cat: 'Sensações e emoções', label: 'Cansaço depois disso', low: 'nem suei', high: 'desmaiei no sofá' },
+
+  // Trabalho e dia a dia
+  { cat: 'Trabalho e dia a dia', label: 'Urgência desse e-mail', low: 'pode esperar semanas', high: 'emergência agora' },
+  { cat: 'Trabalho e dia a dia', label: 'Quão chata é essa reunião', low: 'super produtiva', high: 'quero sair correndo' },
+  { cat: 'Trabalho e dia a dia', label: 'Dificuldade dessa tarefa', low: 'super fácil', high: 'quase impossível' },
+  { cat: 'Trabalho e dia a dia', label: 'Quão cedo você acorda para isso', low: 'nem levanto', high: 'antes do galo' },
+  { cat: 'Trabalho e dia a dia', label: 'Tarefa doméstica', low: 'faço de boa', high: 'a mais odiada' },
+  { cat: 'Trabalho e dia a dia', label: 'Desculpa para chegar atrasado', low: 'ninguém acredita', high: 'convence qualquer chefe' },
+  { cat: 'Trabalho e dia a dia', label: 'Quão longa é essa fila', low: 'passa direto', high: 'leve uma cadeira' },
+  { cat: 'Trabalho e dia a dia', label: 'Coisa para fazer no domingo', low: 'a mais preguiçosa', high: 'a mais produtiva' },
+  { cat: 'Trabalho e dia a dia', label: 'Profissão', low: 'a mais tranquila', high: 'a mais estressante' },
+  { cat: 'Trabalho e dia a dia', label: 'Item da lista de compras', low: 'esqueço sempre', high: 'nunca pode faltar' },
+
+  // Cultura pop
+  { cat: 'Cultura pop', label: 'Filme para chorar', low: 'nenhuma lágrima', high: 'caixa de lenços inteira' },
+  { cat: 'Cultura pop', label: 'Música para festa', low: 'todo mundo senta', high: 'ninguém fica parado' },
+  { cat: 'Cultura pop', label: 'Série para maratonar', low: 'um episódio e dorme', high: 'vira a noite' },
+  { cat: 'Cultura pop', label: 'Super-herói', low: 'o mais fraquinho', high: 'o mais poderoso' },
+  { cat: 'Cultura pop', label: 'Vilão de filme', low: 'fofinho', high: 'aterrorizante' },
+  { cat: 'Cultura pop', label: 'Música para o chuveiro', low: 'ninguém canta', high: 'vira show' },
+  { cat: 'Cultura pop', label: 'Personagem de desenho', low: 'o mais bobo', high: 'o mais esperto' },
+  { cat: 'Cultura pop', label: 'Jogo de videogame', low: 'para relaxar', high: 'para quebrar o controle' },
+  { cat: 'Cultura pop', label: 'Famoso para jantar junto', low: 'o mais chato', high: 'o mais divertido' },
+  { cat: 'Cultura pop', label: 'Livro', low: 'leitura rápida', high: 'nunca termina' },
+
+  // Lugares e viagens
+  { cat: 'Lugares e viagens', label: 'Destino de férias', low: 'o mais relaxante', high: 'aventura extrema' },
+  { cat: 'Lugares e viagens', label: 'Lugar para morar', low: 'cidadezinha calma', high: 'metrópole caótica' },
+  { cat: 'Lugares e viagens', label: 'Lugar para um primeiro encontro', low: 'péssima ideia', high: 'perfeito' },
+  { cat: 'Lugares e viagens', label: 'Meio de transporte', low: 'o mais lento', high: 'o mais rápido' },
+  { cat: 'Lugares e viagens', label: 'Cômodo da casa', low: 'onde ninguém fica', high: 'onde todo mundo se reúne' },
+  { cat: 'Lugares e viagens', label: 'Lugar para dormir', low: 'péssimo', high: 'melhor sono da vida' },
+  { cat: 'Lugares e viagens', label: 'Coisa que não pode faltar na mala', low: 'esquecível', high: 'volta para buscar' },
+  { cat: 'Lugares e viagens', label: 'Lugar para se perder', low: 'acha a saída fácil', high: 'nunca mais volta' },
+  { cat: 'Lugares e viagens', label: 'Cidade para conhecer', low: 'passa em uma tarde', high: 'precisa de um mês' },
+  { cat: 'Lugares e viagens', label: 'Lugar para fazer silêncio', low: 'pode gritar', high: 'nem respire' },
+
+  // Animais e natureza
+  { cat: 'Animais e natureza', label: 'Animal de estimação', low: 'fácil de cuidar', high: 'impossível de cuidar' },
+  { cat: 'Animais e natureza', label: 'Bicho perigoso', low: 'inofensivo', high: 'corre pela sua vida' },
+  { cat: 'Animais e natureza', label: 'Animal fofo', low: 'nem um pouco', high: 'derrete o coração' },
+  { cat: 'Animais e natureza', label: 'Tamanho de animal', low: 'minúsculo', high: 'gigante' },
+  { cat: 'Animais e natureza', label: 'Animal rápido', low: 'lesma', high: 'raio' },
+  { cat: 'Animais e natureza', label: 'Barulho de animal', low: 'silencioso', high: 'acorda o bairro' },
+  { cat: 'Animais e natureza', label: 'Animal inteligente', low: 'bem lerdinho', high: 'gênio' },
+  { cat: 'Animais e natureza', label: 'Clima', low: 'o mais agradável', high: 'o mais insuportável' },
+  { cat: 'Animais e natureza', label: 'Fenômeno da natureza', low: 'bonito de ver', high: 'apavorante' },
+  { cat: 'Animais e natureza', label: 'Planta para ter em casa', low: 'sobrevive a tudo', high: 'morre em uma semana' },
+
+  // Objetos e invenções
+  { cat: 'Objetos e invenções', label: 'Utilidade de uma invenção', low: 'inútil', high: 'mudou o mundo' },
+  { cat: 'Objetos e invenções', label: 'Coisa cara', low: 'centavos', high: 'fortuna' },
+  { cat: 'Objetos e invenções', label: 'Objeto pesado', low: 'uma pena', high: 'precisa de guindaste' },
+  { cat: 'Objetos e invenções', label: 'Coisa para levar numa ilha deserta', low: 'inútil lá', high: 'salva sua vida' },
+  { cat: 'Objetos e invenções', label: 'Presente de aniversário', low: 'o mais sem graça', high: 'o mais incrível' },
+  { cat: 'Objetos e invenções', label: 'Aplicativo de celular', low: 'nunca abro', high: 'não vivo sem' },
+  { cat: 'Objetos e invenções', label: 'Objeto frágil', low: 'indestrutível', high: 'quebra só de olhar' },
+  { cat: 'Objetos e invenções', label: 'Coisa que perde fácil', low: 'nunca perco', high: 'já perdi três hoje' },
+  { cat: 'Objetos e invenções', label: 'Brinquedo', low: 'para bebê', high: 'para adulto' },
+  { cat: 'Objetos e invenções', label: 'Roupa', low: 'para ficar em casa', high: 'para o tapete vermelho' },
+
+  // Polêmicas leves
+  { cat: 'Polêmicas leves', label: 'Quão aceitável é isso', low: 'crime', high: 'totalmente ok' },
+  { cat: 'Polêmicas leves', label: 'Coisa que dá azar', low: 'superstição boba', high: 'nunca arrisco' },
+  { cat: 'Polêmicas leves', label: 'Abacaxi na pizza e afins', low: 'jamais', high: 'combinação divina' },
+  { cat: 'Polêmicas leves', label: 'Hábito irritante', low: 'tolerável', high: 'fim da amizade' },
+  { cat: 'Polêmicas leves', label: 'Coisa que só você faz', low: 'todo mundo faz', high: 'sou o único no mundo' },
+  { cat: 'Polêmicas leves', label: 'Desculpa esfarrapada', low: 'crível', high: 'ninguém acredita' },
+  { cat: 'Polêmicas leves', label: 'Motivo para terminar um namoro', low: 'bobagem', high: 'motivo justo' },
+  { cat: 'Polêmicas leves', label: 'Quão nerd é isso', low: 'nada', high: 'nível máximo' },
+  { cat: 'Polêmicas leves', label: 'Coisa que envelheceu mal', low: 'continua ótima', high: 'vergonha alheia' },
+  { cat: 'Polêmicas leves', label: 'Mentira que todo mundo conta', low: 'ninguém conta', high: 'todo mundo conta' },
+];

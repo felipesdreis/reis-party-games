@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ito</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="setup">
+  <div class="head">
+    <p class="eyebrow blue">Nova partida</p>
+    <h2>Quem vai jogar?</h2>
+  </div>
+  <div class="howto">
+    <p><b>Cada um recebe em segredo</b> um número de 1 a 100.</p>
+    <p><b>Escolham um tema</b> e cada um dá uma dica que represente seu número — sem falar o número.</p>
+    <p><b>Coloquem todos em ordem</b> do menor para o maior e revelem.</p>
+  </div>
+  <div class="toggle">
+    <button type="button" data-mode="local">1 celular só</button>
+    <button type="button" data-mode="qr">Cada um no seu</button>
+  </div>
+  <p id="modeHint" class="hint"></p>
+  <div class="row">
+    <input id="nameInput" placeholder="Nome do jogador" maxlength="20" autocomplete="off">
+    <button id="btnAdd" class="square" aria-label="Adicionar jogador">+</button>
+  </div>
+  <div id="chips" class="chips"></div>
+  <p id="playerCount" class="hint"></p>
+  <button id="btnStart" class="primary" disabled>Continuar</button>
+</section>
+
+<section id="theme" hidden>
+  <div class="head">
+    <p class="eyebrow purple">Passo 2</p>
+    <h2>Escolham um tema</h2>
+  </div>
+  <div id="catChips" class="catChips"></div>
+  <div id="themeList" class="themeList"></div>
+  <button id="btnRandom">🎲 Tema aleatório</button>
+  <input id="customTheme" placeholder="ou escreva o seu tema" maxlength="60" autocomplete="off">
+  <button id="btnRound" class="primary purple" disabled>Começar rodada</button>
+</section>
+
+<section id="reveal" hidden>
+  <div id="progressSeg"></div>
+  <p class="themeLine">TEMA · <span id="revealTheme"></span></p>
+  <div id="revealLocked" class="center">
+    <div id="revealAvatar" class="avatar big"></div>
+    <div>
+      <p>Passe o celular para</p>
+      <h2 id="revealName"></h2>
+    </div>
+    <button id="btnShow" class="primary">Toque para ver seu número</button>
+    <p class="hint">Confira se ninguém está olhando de lado 👀</p>
+  </div>
+  <div id="revealOpen" class="center" hidden>
+    <p id="revealWho"></p>
+    <div id="secret" class="secret"></div>
+    <div class="extremes"><span id="revealLow"></span><span id="revealHigh"></span></div>
+    <button id="btnHide" class="primary green">Memorizei, esconder e passar</button>
+  </div>
+</section>
+
+<section id="share" hidden>
+  <div class="head">
+    <p class="eyebrow blue">Passo 3</p>
+    <h2>Escaneiem o QR code</h2>
+  </div>
+  <p class="themeLine">TEMA · <span id="shareTheme"></span></p>
+  <div id="qr"></div>
+  <p>Cada um aponta a câmera do celular, abre o link e toca no próprio nome.</p>
+  <p id="fileWarn" class="hint warn" hidden>Abra o site pelo link publicado para o QR funcionar — em arquivo local ninguém consegue abrir.</p>
+  <button id="btnShare">Compartilhar link</button>
+  <button id="btnHostPlay">Também jogo: ver meu número</button>
+  <button id="btnAllSeen" class="primary green">Todos viram, continuar</button>
+</section>
+
+<section id="guest" hidden>
+  <div class="card purple">
+    <h2 id="guestTheme"></h2>
+    <div class="extremes"><span id="guestLow"></span><span id="guestHigh"></span></div>
+  </div>
+  <div id="guestWho">
+    <h2>Quem é você?</h2>
+    <div id="guestNames" class="stack"></div>
+  </div>
+  <div id="guestConfirm" class="center" hidden>
+    <h2 id="guestAsk"></h2>
+    <button id="btnMe" class="primary">Sou eu, mostrar número</button>
+    <button id="btnNotMe">Não, voltar</button>
+  </div>
+  <div id="guestOpen" class="center" hidden>
+    <p id="guestName"></p>
+    <div id="guestSecret" class="secret"></div>
+    <button id="btnGuestToggle" class="primary"></button>
+  </div>
+</section>
+
+<section id="discuss" hidden>
+  <div class="head">
+    <p class="eyebrow purple">Passo 3</p>
+    <h2>Hora da dica</h2>
+    <p id="discussSub" class="hint"></p>
+  </div>
+  <div class="card purple">
+    <h2 id="discussTheme"></h2>
+    <div class="extremes"><span id="discussLow"></span><span id="discussHigh"></span></div>
+  </div>
+  <p>Cada jogador diz em voz alta uma dica dentro do tema, sem falar números. Ouçam todos e discutam quem parece ter o menor e o maior número.</p>
+  <div id="discussChips" class="chips"></div>
+  <button id="btnArrange" class="primary purple">Organizar ordem →</button>
+</section>
+
+<section id="arrange" hidden>
+  <div class="head">
+    <p class="eyebrow green">Passo 4</p>
+    <h2>Organizem a ordem</h2>
+    <p class="hint">Arrastem os nomes: menor número no topo, maior embaixo.</p>
+  </div>
+  <div id="queue" class="queue"></div>
+  <button id="btnSubmit" class="primary green">Revelar ordem</button>
+</section>
+
+<section id="result" hidden>
+  <div id="resultCard" class="card">
+    <h2 id="resultTitle"></h2>
+    <p id="resultSub"></p>
+  </div>
+  <div id="resultList"></div>
+  <button id="btnNewRound" class="primary">Novo tema</button>
+  <button id="btnNewGame" class="link">Nova partida (trocar jogadores)</button>
+</section>
+
+<button id="btnHome" hidden>✕ Cancelar jogo</button>
+
+<script src="vendor/qrcode.js"></script>
+<script src="themes.js"></script>
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

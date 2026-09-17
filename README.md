@@ -7,7 +7,7 @@ Coleção de party games web, um por subpasta. Cada jogo é HTML+CSS+JS puro —
 ## Jogos
 
 - [`mimica/`](mimica/) — pronto.
-- [`ito/`](ito/) — em breve.
+- [`ito/`](ito/) — pronto.
 
 ## Rodar localmente
 
