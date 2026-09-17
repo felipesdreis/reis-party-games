@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "agent",
+            "if": "Bash(git commit *)",
+            "prompt": "Antes deste commit no repo party-games, rode `git diff --cached` para ver as mudanças staged e leia o README.md atual. Se as mudanças adicionam, removem ou mudam o status de um jogo (pasta em mimica/, ito/, batata-quente/ ou uma nova pasta de jogo), ou mudam comandos/estrutura documentados no README, edite o README.md para refletir isso e rode `git add README.md` para incluir a atualização no commit. Se o README já está correto ou as mudanças não afetam o que ele documenta, não faça nada. $ARGUMENTS",
+            "model": "claude-sonnet-5",
+            "timeout": 120,
+            "statusMessage": "Revisando README antes do commit..."
+          }
+        ]
+      }
+    ]
+  }
+}

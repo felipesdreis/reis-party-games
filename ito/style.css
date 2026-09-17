@@ -154,3 +154,5 @@ button:disabled { opacity: .4; cursor: default; filter: none; transform: none; }
   position: fixed; top: 12px; left: 12px; min-height: 0; flex: 0; padding: 8px 12px;
   font-size: .9rem; font-weight: 600; background: transparent; border: none; color: var(--text-primary); opacity: .6;
 }
+.backHub { align-self: flex-start; font-size: .9rem; font-weight: 600; color: var(--text-muted); text-decoration: none; }
+.backHub:hover { color: var(--text-primary); }

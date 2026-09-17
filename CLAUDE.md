@@ -4,9 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## O que é este repositório
 
-Coleção de party games web, um por subpasta (`mimica/`, `ito/`, ...). Cada jogo é standalone: HTML+CSS+JS puro, **sem build, sem backend, sem dependências**, pensado para um único dispositivo passado de mão em mão (pass-the-phone / hot-seat), abrindo direto no navegador ou via GitHub Pages.
+Coleção de party games web, um por subpasta (`mimica/`, `ito/`, `batata-quente/`, ...). Cada jogo é standalone: HTML+CSS+JS puro, **sem build, sem backend, sem dependências**, pensado para um único dispositivo passado de mão em mão (pass-the-phone / hot-seat), abrindo direto no navegador ou via GitHub Pages.
 
-`mimica/` é o jogo de referência (já implementado e completo). `ito/` é o próximo a ser construído — siga exatamente o padrão de `mimica/` a menos que o usuário peça algo diferente.
+`mimica/` é o jogo de referência (padrão original). `mimica/`, `ito/` e `batata-quente/` já estão implementados e completos — todo jogo novo deve seguir exatamente o mesmo padrão de arquitetura a menos que o usuário peça algo diferente.
+
+## Hub (index.html na raiz)
+
+O `index.html` na raiz lista todo jogo em `<a class="game" href="<pasta>/">`. Todo jogo novo deve: (1) ganhar uma entrada lá, e (2) ter no topo da tela inicial (`#setup`) um link `<a class="backHub" href="../">← Escolher outro jogo</a>`, com a classe `.backHub` replicada no `style.css` do próprio jogo — **não existe CSS/JS compartilhado entre jogos**, cada pasta duplica suas próprias regras (consistente com "sem dependências").
 
 ## Comandos
 
