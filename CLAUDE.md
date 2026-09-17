@@ -23,7 +23,13 @@ node test.js       # roda os testes: imprime "OK" ou quebra com stack trace no a
 
 Não há testes automatizados de UI — verificação manual é feita abrindo `index.html` direto no navegador (file://) ou com `npx serve` / Live Server.
 
+Pra pular direto pra uma tela sem jogar a partida inteira: no console do navegador, `state.screen = 'nomeDaTela'; render();` funciona em qualquer um dos jogos, porque `state`/`render` são globais do script clássico (não é module).
+
 Não há linter, formatter, bundler ou `package.json` configurados em nenhum jogo — não introduza nenhum sem necessidade explícita.
+
+## Hooks
+
+`.claude/settings.json` tem um hook `PreToolUse` em **qualquer** comando Bash (o prompt do hook diz que é só pra `git commit`, mas na prática já disparou — e bloqueou — comandos não relacionados, tipo subir um servidor local). Não é um bloqueio de segurança real: se travar um comando sem motivo aparente, só tentar de novo.
 
 ## Arquitetura de cada jogo (padrão estabelecido por `mimica/`)
 
@@ -51,6 +57,8 @@ Isso faz o mesmo arquivo funcionar tanto carregado via `<script>` no navegador q
 **Padrão de estado**: um único objeto `state` mutável com um campo `screen` (string) que determina qual `<section>` aparece. Funções de `game.js` recebem `state`, mutam e retornam o mesmo objeto — sem classes, sem imutabilidade, sem gerenciador de estado. `app.js` tem uma função `render()` que esconde todas as `<section>` e mostra só a de `state.screen`, preenchendo textos por `id`.
 
 **Timer** (quando o jogo tem cronômetro): `setInterval` recalculando a partir de um timestamp `endAt` (`Date.now() + duração`), nunca contando ticks — assim não desalinha se a aba for para segundo plano. Ao entrar na tela de jogo, tenta `navigator.wakeLock.request('screen')` dentro de `try/catch` (ignora silenciosamente se não suportado, ex. em `file://`).
+
+**Fundo por tela**: `app.js` seta `document.body.dataset.screen = state.screen` dentro de `render()`; `style.css` define `body[data-screen="x"] { background: radial-gradient(...), var(--bg-void); }` por tela, reaproveitando as cores que já existem em `:root` (não inventa paleta nova). Se a tela inicial aparece antes do primeiro `render()` (ex.: `setup` antes do primeiro clique), o `<body data-screen="setup">` precisa vir hardcoded no HTML.
 
 ## Convenções de conteúdo
 

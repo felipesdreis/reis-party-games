@@ -11,6 +11,7 @@ function setScore(prefix, s) {
 function render() {
   document.querySelectorAll('section').forEach(sec => { sec.hidden = sec.id !== state.screen; });
   $('btnHome').hidden = state.screen === 'setup';
+  document.body.dataset.screen = state.screen;
   const cur = state.teams[state.round % 2];
   const other = state.teams[(state.round + 1) % 2];
   switch (state.screen) {

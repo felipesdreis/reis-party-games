@@ -36,7 +36,7 @@ function renderConfetti() {
 function render() {
   document.querySelectorAll('section').forEach(sec => { sec.hidden = sec.id !== state.screen; });
   $('btnHome').hidden = state.screen === 'setup';
-  document.body.classList.toggle('win', state.screen === 'gameOver');
+  document.body.dataset.screen = state.screen;
   switch (state.screen) {
     case 'setup': {
       $('chips').innerHTML = state.players.map((p, i) =>

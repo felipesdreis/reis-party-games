@@ -150,6 +150,13 @@ button:disabled { opacity: .4; cursor: default; filter: none; transform: none; }
 .connector.ok { color: var(--green-500); }
 .connector.bad { color: var(--red-400); }
 
+/* gradiente radial de fundo por tela, cor casando com o eyebrow/card já usado nela */
+body[data-screen="setup"], body[data-screen="reveal"], body[data-screen="share"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 255 / .35), transparent 65%), var(--bg-void); }
+body[data-screen="theme"], body[data-screen="guest"], body[data-screen="discuss"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 300 / .35), transparent 65%), var(--bg-void); }
+body[data-screen="arrange"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 150 / .35), transparent 65%), var(--bg-void); }
+body[data-screen="result"][data-result="ok"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 150 / .4), transparent 65%), var(--bg-void); }
+body[data-screen="result"][data-result="bad"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.18 25 / .4), transparent 65%), var(--bg-void); }
+
 #btnHome {
   position: fixed; top: 12px; left: 12px; min-height: 0; flex: 0; padding: 8px 12px;
   font-size: .9rem; font-weight: 600; background: transparent; border: none; color: var(--text-primary); opacity: .6;

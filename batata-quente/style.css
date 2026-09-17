@@ -82,14 +82,19 @@ button:disabled { opacity: .4; cursor: default; filter: none; transform: none; }
 }
 #categoryLabel { font-size: clamp(1.8rem, 8vw, 2.8rem); font-weight: 800; color: var(--blue-400); }
 
-/* flash de explosão */
+/* gradiente radial de fundo por tela, cor casando com o estado (ver docs/PLANO.md) */
+body[data-screen="setup"] { background: radial-gradient(120% 100% at 15% 100%, oklch(45% 0.15 255 / .35), transparent 60%), var(--bg-void); }
+body[data-screen="playing"] { background: radial-gradient(120% 90% at 50% 100%, oklch(45% 0.16 55 / .4), transparent 65%), var(--bg-void); }
+body[data-screen="exploded"] { background: radial-gradient(100% 80% at 50% 30%, oklch(45% 0.19 25 / .55), transparent 70%), var(--bg-void); }
+body[data-screen="gameOver"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 150 / .4), transparent 65%), var(--bg-void); }
+
+/* flash de explosão, por cima do gradiente da tela "exploded" */
 body.boom { background-color: var(--red-400); animation: boom-flash .3s steps(1) 4; }
 @keyframes boom-flash {
   0%, 100% { background-color: var(--red-400); }
   50% { background-color: var(--bg-void); }
 }
 
-body.win { background-color: oklch(28% 0.06 150); }
 #winnerTitle { color: var(--green-500); }
 
 #confetti { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }

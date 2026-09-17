@@ -68,6 +68,12 @@ button:active { transform: scale(.97); }
   50% { filter: drop-shadow(0 0 40px var(--blue-glow)); }
 }
 #wordLabel, #roundScore { color: var(--text-muted); }
+
+/* gradiente radial de fundo por tela, cor casando com o estado */
+body[data-screen="setup"], body[data-screen="handoff"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 255 / .35), transparent 65%), var(--bg-void); }
+body[data-screen="playing"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.16 55 / .35), transparent 65%), var(--bg-void); }
+body[data-screen="roundEnd"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 300 / .35), transparent 65%), var(--bg-void); }
+body[data-screen="gameOver"] { background: radial-gradient(120% 90% at 50% 0%, oklch(45% 0.15 150 / .4), transparent 65%), var(--bg-void); }
 .backHub { align-self: flex-start; font-size: .9rem; font-weight: 600; color: var(--text-muted); text-decoration: none; }
 .backHub:hover { color: var(--text-primary); }
 #btnHome {

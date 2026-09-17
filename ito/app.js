@@ -12,6 +12,7 @@ const MODE_HINT = {
 function render() {
   document.querySelectorAll('section').forEach(sec => { sec.hidden = sec.id !== state.screen; });
   $('btnHome').hidden = state.screen === 'setup' || state.screen === 'guest';
+  document.body.dataset.screen = state.screen;
   const t = state.theme;
   const n = state.players.length;
   switch (state.screen) {
@@ -87,6 +88,7 @@ function render() {
       const errs = errors(state);
       const oks = pairsOk(state);
       $('resultCard').className = `card ${errs ? 'bad' : 'ok'}`;
+      document.body.dataset.result = errs ? 'bad' : 'ok';
       $('resultTitle').textContent = errs ? 'Quase lá' : '🎉 Ordem perfeita!';
       $('resultSub').textContent = errs
         ? `${errs} par${errs > 1 ? 'es' : ''} fora de ordem — vejam os ✕.`

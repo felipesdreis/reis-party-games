@@ -83,7 +83,9 @@ gameOver ──(Jogar de novo → newGame())──> setup
 - **playing**: só categoria + ícone de bomba pulsando. Nenhum número de tempo.
 - **exploded** (`eliminated === null`): dispara vibração+flash+beep; picker de nomes vivos.
 - **exploded** (`eliminated !== null`): "{nome} eliminado! Restam N" + seletor de categoria (mesmo widget do setup) + "Próxima rodada".
-- **gameOver**: "{winner} venceu!" + fundo verde + emojis de confete/fogos flutuando no plano de fundo (`body.win` + `#confetti`) + "Jogar de novo".
+- **gameOver**: "{winner} venceu!" + fundo com gradiente verde + emojis de confete/fogos flutuando no plano de fundo (`body[data-screen="gameOver"]` + `#confetti`) + "Jogar de novo".
+
+Fundo com gradiente radial por tela (`body[data-screen]`, um por valor de `state.screen`): azul no setup, laranja jogando, vermelho na explosão, verde no gameOver.
 
 ### Timer e efeitos (`app.js`)
 
