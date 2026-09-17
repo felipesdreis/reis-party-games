@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-void: oklch(15% 0.02 260);
+  --bg-raised: oklch(18% 0.03 260);
+  --bg-inset: oklch(20% 0.02 260);
+  --border-hairline: oklch(40% 0.02 260 / 0.4);
+  --text-primary: oklch(95% 0.01 260);
+  --text-secondary: oklch(80% 0.02 260);
+  --text-muted: oklch(70% 0.02 260);
+  --blue-400: oklch(70% 0.19 255);
+  --purple-400: oklch(70% 0.19 300);
+  --green-500: oklch(70% 0.16 150);
+  --red-400: oklch(65% 0.2 25);
+  --orange-400: oklch(70% 0.19 55);
+  --radius-md: 14px;
+  --radius-lg: 20px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100dvh; background: var(--bg-void); color: var(--text-primary);
+  font-family: 'Inter', -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  transition: background-color .1s;
+}
+section { width: 100%; max-width: 480px; padding: 24px 16px; display: flex; flex-direction: column; gap: 20px; }
+section[hidden] { display: none; }
+h1 { font-size: 3rem; margin: 0; color: var(--blue-400); font-weight: 800; }
+h2 { font-size: 1.6rem; margin: 0; font-weight: 700; }
+p { margin: 0; font-size: 1.1rem; color: var(--text-secondary); }
+label { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+.hint { font-size: .9rem; color: var(--text-muted); }
+input {
+  font-size: 1.25rem; padding: 12px; border-radius: var(--radius-md); width: 100%; min-width: 0;
+  border: 1px solid var(--border-hairline); background: var(--bg-inset); color: var(--text-primary);
+}
+input[type="range"] { padding: 0; accent-color: var(--blue-400); }
+input:focus, button:focus-visible { outline: 2px solid var(--blue-400); outline-offset: 2px; }
+button {
+  min-height: 64px; font-size: 1.4rem; font-weight: 700; border-radius: var(--radius-md); font-family: inherit;
+  background: var(--bg-inset); border: 1px solid var(--border-hairline); color: var(--text-primary);
+  cursor: pointer; flex: 1; transition: filter .2s, transform .1s;
+}
+button.primary { background: #fff; color: #000; border-color: transparent; }
+button.square { flex: 0 0 64px; font-size: 2rem; }
+button:hover { filter: brightness(1.15); }
+button.primary:hover { filter: brightness(.9); }
+button:active { transform: scale(.97); }
+button:disabled { opacity: .4; cursor: default; filter: none; transform: none; }
+.row { display: flex; gap: 12px; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.stack button { text-align: left; padding: 0 16px; }
+
+.howto {
+  background: var(--bg-raised); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg);
+  padding: 20px; text-align: left; display: flex; flex-direction: column; gap: 10px;
+}
+.howto p { font-size: .95rem; }
+.howto p b { color: var(--text-primary); }
+
+/* chips de jogadores */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 14px; border-radius: 999px;
+  background: var(--bg-raised); border: 1px solid var(--border-hairline); font-size: 1rem;
+}
+.chip .x { flex: 0; min-height: 0; padding: 4px 6px; font-size: .8rem; background: none; border: none; color: var(--text-muted); }
+
+/* categorias */
+.catChips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+.catChips::-webkit-scrollbar { display: none; }
+.catChips .cat { flex: 0 0 auto; min-height: 44px; padding: 0 16px; font-size: .9rem; font-weight: 600; border-radius: 999px; white-space: nowrap; }
+.catChips .cat.sel { background: var(--blue-400); color: #000; border-color: transparent; }
+
+/* bomba pulsando, escondendo o tempo de propósito */
+.bomb {
+  font-size: 6rem; line-height: 1; animation: bomb-pulse 1s ease-in-out infinite;
+}
+@keyframes bomb-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+#categoryLabel { font-size: clamp(1.8rem, 8vw, 2.8rem); font-weight: 800; color: var(--blue-400); }
+
+/* flash de explosão */
+body.boom { background-color: var(--red-400); animation: boom-flash .3s steps(1) 4; }
+@keyframes boom-flash {
+  0%, 100% { background-color: var(--red-400); }
+  50% { background-color: var(--bg-void); }
+}
+
+body.win { background-color: oklch(28% 0.06 150); }
+#winnerTitle { color: var(--green-500); }
+
+#confetti { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+#confetti span { position: absolute; top: 100%; font-size: 2rem; animation: confetti-float linear infinite; }
+@keyframes confetti-float {
+  to { transform: translateY(-120vh) rotate(360deg); }
+}
+
+#btnHome {
+  position: fixed; top: 12px; left: 12px; min-height: 0; flex: 0; padding: 8px 12px;
+  font-size: .9rem; font-weight: 600; background: transparent; border: none; color: var(--text-primary); opacity: .6;
+}

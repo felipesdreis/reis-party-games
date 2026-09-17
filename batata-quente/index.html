@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Batata Quente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="confetti" aria-hidden="true"></div>
+
+<section id="setup">
+  <h1>Batata Quente</h1>
+  <div class="howto">
+    <p>Um objeto (bola, bicho de pelúcia...) passa de mão em mão enquanto cada um fala um item da categoria.</p>
+    <p>Quando o tempo — secreto — estourar, quem estiver segurando sai da rodada.</p>
+    <p><b>Último jogador de pé vence!</b></p>
+  </div>
+
+  <div class="row">
+    <input id="nameInput" placeholder="Nome do jogador" maxlength="20" autocomplete="off">
+    <button id="btnAdd" class="square" aria-label="Adicionar jogador">+</button>
+  </div>
+  <div id="chips" class="chips"></div>
+  <p id="playerCount" class="hint"></p>
+
+  <label>Categoria
+    <div id="categoryPicker" class="catChips"></div>
+  </label>
+  <button id="btnRandomCategory">🎲 Categoria aleatória</button>
+  <input id="customCategory" placeholder="ou escreva a sua categoria" maxlength="60" autocomplete="off">
+
+  <label>Duração da rodada: <span id="durationLabel"></span>
+    <input id="duration" type="range" min="30" max="120" step="5" value="45">
+  </label>
+  <p class="hint">O tempo real varia um pouco pra mais ou pra menos — ninguém sabe a hora exata da explosão.</p>
+
+  <button id="btnStart" class="primary" disabled>Começar</button>
+</section>
+
+<section id="playing" hidden>
+  <div id="bomb" class="bomb">💣</div>
+  <p class="hint">Categoria</p>
+  <div id="categoryLabel"></div>
+</section>
+
+<section id="exploded" hidden>
+  <div id="explodedPick">
+    <h2>💥 Quem estava segurando?</h2>
+    <div id="alivePicker" class="stack"></div>
+  </div>
+  <div id="explodedConfirm" hidden>
+    <h2 id="eliminatedTitle"></h2>
+    <p id="aliveCount" class="hint"></p>
+
+    <label>Trocar categoria (opcional)
+      <div id="categoryPickerNext" class="catChips"></div>
+    </label>
+    <button id="btnRandomCategoryNext">🎲 Categoria aleatória</button>
+    <input id="customCategoryNext" placeholder="ou escreva outra categoria" maxlength="60" autocomplete="off">
+
+    <button id="btnNextRound" class="primary">Próxima rodada</button>
+  </div>
+</section>
+
+<section id="gameOver" hidden>
+  <h2 id="winnerTitle"></h2>
+  <button id="btnAgain" class="primary">Jogar de novo</button>
+</section>
+
+<button id="btnHome" hidden>✕ Cancelar jogo</button>
+
+<script src="categorias.js"></script>
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
