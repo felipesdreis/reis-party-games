@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hot Seat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-screen="setup">
+
+<section id="setup">
+  <a class="backHub" href="../">← Escolher outro jogo</a>
+  <h1>Hot Seat</h1>
+  <div class="howto">
+    <p>A cada rodada, alguém senta na Hot Seat e escolhe uma pergunta sobre si mesmo.</p>
+    <p>Todo mundo escreve o palpite <b>no papel</b>. Depois da revelação, marque aqui quem acertou.</p>
+  </div>
+
+  <div class="row">
+    <input id="nameInput" placeholder="Nome do jogador" maxlength="20" autocomplete="off">
+    <button id="btnAdd" class="square" aria-label="Adicionar jogador">+</button>
+  </div>
+  <div id="chips" class="chips"></div>
+  <p id="playerCount" class="hint"></p>
+
+  <button id="btnStart" class="primary" disabled>Começar</button>
+</section>
+
+<section id="roundStart" hidden>
+  <p class="hint" id="roundLabel"></p>
+  <h2 id="hotSeatLabel"></h2>
+  <p class="hint">Escolha o tema das perguntas dessa rodada:</p>
+  <div class="stack">
+    <button type="button" class="cat" data-cat="leves">Leves</button>
+    <button type="button" class="cat" data-cat="engracadas">Engraçadas</button>
+    <button type="button" class="cat" data-cat="bizarras">Bizarras</button>
+    <button type="button" class="cat" data-cat="desafiadoras">Desafiadoras</button>
+  </div>
+</section>
+
+<section id="questionPick" hidden>
+  <h2 id="questionPickLabel"></h2>
+  <p class="hint">Escolha uma pergunta pra responder:</p>
+  <div id="questionChoices" class="stack"></div>
+</section>
+
+<section id="scoring" hidden>
+  <p class="hint">Pergunta</p>
+  <h2 id="scoringQuestion"></h2>
+  <p class="hint">Todo mundo já escreveu o palpite no papel? Depois da revelação, toque em quem acertou:</p>
+  <div id="scoringPlayers" class="stack"></div>
+  <button id="btnConfirm" class="primary">Confirmar rodada</button>
+</section>
+
+<section id="roundEnd" hidden>
+  <h2 id="roundSummary"></h2>
+  <div id="scoreboard" class="stack"></div>
+  <button id="btnNextRound" class="primary">Próxima rodada</button>
+</section>
+
+<section id="gameOver" hidden>
+  <h2>Fim de jogo!</h2>
+  <div id="ranking" class="stack"></div>
+  <button id="btnAgain" class="primary">Jogar de novo</button>
+</section>
+
+<script src="questions.js"></script>
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
