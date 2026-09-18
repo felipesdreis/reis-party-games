@@ -4,8 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Party Games</title>
+  <link rel="icon" href="reis-party-games-icon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="reis-party-games-icon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Ruthie&display=swap');
     :root {
       --bg-void: oklch(15% 0.02 260);
       --bg-raised: oklch(18% 0.03 260);
@@ -24,7 +26,10 @@
       display: flex; align-items: center; justify-content: center;
     }
     main { width: 100%; max-width: 480px; padding: 24px 16px; display: flex; flex-direction: column; gap: 20px; }
-    h1 { font-size: 3rem; margin: 0; color: var(--blue-400); font-weight: 800; text-align: center; }
+    .logo { width: 88px; height: 88px; margin: 0 auto; display: block; }
+    h1 { margin: 0; text-align: center; }
+    h1 .title { display: block; font-family: 'Ruthie', cursive; font-size: 4rem; color: var(--text-primary); font-weight: 400; letter-spacing: .05em; }
+    h1 .subtitle { display: block; font-size: .95rem; color: var(--blue-400); font-weight: 600; letter-spacing: .35em; margin-top: 4px; }
     .game {
       display: block; min-height: 72px; padding: 16px 20px; border-radius: var(--radius-lg);
       background: var(--bg-raised); border: 1px solid var(--border-hairline); color: var(--text-primary);
@@ -39,7 +44,8 @@
 </head>
 <body>
 <main>
-  <h1>Reis Party Games</h1>
+  <img class="logo" src="reis-party-games-icon-dark.svg" alt="" width="88" height="88">
+  <h1><span class="title">REIS</span><span class="subtitle">PARTY GAMES</span></h1>
   <a class="game" href="mimica/">
     <strong>Mímica</strong>
     <span>8 rodadas, times revezando — quem adivinha mais palavras?</span>
