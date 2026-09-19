@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cidade Dorme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-screen="setup">
+
+<section id="setup">
+  <a class="backHub" href="../">← Escolher outro jogo</a>
+  <div class="head">
+    <p class="eyebrow blue">Nova partida</p>
+    <h2>Quem vai jogar?</h2>
+  </div>
+  <div class="howto">
+    <p><b>Cada jogador recebe em segredo</b> um papel: Mafioso, Médico, Investigador ou Cidadão Comum.</p>
+    <p><b>Um jogador é o host</b> — segura o celular, narra a noite e o dia, e toca na tela pra registrar quem foi apontado.</p>
+    <p><b>A cidade dorme e acorda</b> em rodadas até um lado vencer.</p>
+  </div>
+  <div class="toggle">
+    <button type="button" data-mode="local">1 celular só</button>
+    <button type="button" data-mode="qr">Cada um no seu</button>
+  </div>
+  <p id="modeHint" class="hint"></p>
+  <div class="row">
+    <input id="nameInput" placeholder="Nome do jogador" maxlength="20" autocomplete="off">
+    <button id="btnAdd" class="square" aria-label="Adicionar jogador">+</button>
+  </div>
+  <div id="chips" class="chips"></div>
+  <p id="playerCount" class="hint"></p>
+  <button id="btnStart" class="primary" disabled>Sortear papéis e começar</button>
+</section>
+
+<section id="reveal" hidden>
+  <div id="progressSeg"></div>
+  <div id="revealLocked" class="center">
+    <div id="revealAvatar" class="avatar big"></div>
+    <div>
+      <p>Passe o celular para</p>
+      <h2 id="revealName"></h2>
+    </div>
+    <button id="btnShow" class="primary">Toque para ver seu papel</button>
+    <p class="hint">Confira se ninguém está olhando de lado 👀</p>
+  </div>
+  <div id="revealOpen" class="center" hidden>
+    <div id="revealCard"></div>
+    <button id="btnHide" class="primary green">Memorizei, esconder e passar</button>
+  </div>
+</section>
+
+<section id="share" hidden>
+  <div class="head">
+    <p class="eyebrow blue">Revelação de papéis</p>
+    <h2>Escaneiem o QR code</h2>
+  </div>
+  <div id="qr"></div>
+  <p>Cada um aponta a câmera do celular, abre o link e toca no próprio nome.</p>
+  <p id="fileWarn" class="hint warn" hidden>Abra o site pelo link publicado para o QR funcionar — em arquivo local ninguém consegue abrir.</p>
+  <button id="btnShare">Compartilhar link</button>
+  <button id="btnAllSeen" class="primary green">Todos viram, continuar</button>
+</section>
+
+<section id="guest" hidden>
+  <div id="guestWho">
+    <h2>Quem é você?</h2>
+    <div id="guestNames" class="stack"></div>
+  </div>
+  <div id="guestConfirm" class="center" hidden>
+    <h2 id="guestAsk"></h2>
+    <button id="btnMe" class="primary">Sou eu, mostrar papel</button>
+    <button id="btnNotMe">Não, voltar</button>
+  </div>
+  <div id="guestOpen" class="center" hidden>
+    <div id="guestCard"></div>
+  </div>
+</section>
+
+<section id="night" hidden>
+  <div class="head">
+    <p class="eyebrow purple">Noite <span id="nightNum"></span></p>
+  </div>
+  <p id="nightScript" class="script"></p>
+  <div id="nightGrid" class="grid"></div>
+  <div id="nightResultCard" class="hint result" hidden>
+    <p id="nightResultText"></p>
+    <button id="btnFinishNight" class="primary">Investigador dormiu, continuar</button>
+  </div>
+</section>
+
+<section id="nightResult" hidden>
+  <div class="head">
+    <p class="eyebrow purple">Amanhece</p>
+  </div>
+  <p class="script">O sol nasce e a cidade acorda...</p>
+  <div id="nightResultInfo"></div>
+  <button id="btnToDay" class="primary">Continuar</button>
+</section>
+
+<section id="day" hidden>
+  <div class="head">
+    <p class="eyebrow orange">Dia</p>
+    <h2>Discussão</h2>
+  </div>
+  <p class="script">É hora de discutir. Quem vocês acham que é da Máfia?</p>
+  <div id="dayGrid" class="grid"></div>
+  <button id="btnNoOne">Ninguém foi expulso</button>
+</section>
+
+<section id="dayResult" hidden>
+  <div class="head">
+    <p class="eyebrow orange">Resultado da votação</p>
+  </div>
+  <div id="dayResultInfo"></div>
+  <button id="btnNextNight" class="primary">Próxima noite</button>
+</section>
+
+<section id="gameOver" hidden>
+  <div id="gameOverCard" class="card">
+    <h2 id="gameOverTitle"></h2>
+  </div>
+  <div id="gameOverList"></div>
+  <button id="btnPlayAgain" class="primary">Jogar de novo</button>
+</section>
+
+<script src="vendor/qrcode.js"></script>
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
