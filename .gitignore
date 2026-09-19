@@ -2,3 +2,4 @@
 .DS_Store
 .claude/.proven-config-version
 .claude/proven-config.json
+graphify-out/
