@@ -31,10 +31,6 @@ Não há linter, formatter, bundler ou `package.json` configurados em nenhum jog
 
 Este repo tem um grafo de conhecimento gerado pela skill `graphify` em `graphify-out/` (gitignored, gerado localmente — não existe até alguém rodar `/graphify`). Se `graphify-out/graph.json` existir, prefira `/graphify query "<pergunta>"` a explorar o código manualmente arquivo por arquivo para perguntas sobre arquitetura, convenções cross-game ou como um jogo se relaciona com outro — é mais rápido e já mapeia as relações entre `CLAUDE.md`, os `docs/PLANO.md` de cada jogo e o código. Se `graph.json` não existir ou estiver desatualizado após mudanças grandes, rode `/graphify --update` antes de confiar nele.
 
-## Hooks
-
-`.claude/settings.json` tem um hook `PreToolUse` em **qualquer** comando Bash (o prompt do hook diz que é só pra `git commit`, mas na prática já disparou — e bloqueou — comandos não relacionados, tipo subir um servidor local). Não é um bloqueio de segurança real: se travar um comando sem motivo aparente, só tentar de novo.
-
 ## Arquitetura de cada jogo (padrão estabelecido por `mimica/`)
 
 Todo jogo novo deve seguir esta mesma separação de arquivos:
