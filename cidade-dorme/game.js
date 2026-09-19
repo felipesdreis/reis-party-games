@@ -232,7 +232,9 @@ function othersAliveCount(state) {
 
 function isOver(state) {
   const mafiaAlive = mafiaAliveCount(state);
-  return mafiaAlive > othersAliveCount(state) || mafiaAlive === 0;
+  if (mafiaAlive === 0) return true;
+  if (mafiaAlive >= othersAliveCount(state)) return true;
+  return !roleAlive(state, 'medico') && !roleAlive(state, 'investigador');
 }
 
 function winner(state) {

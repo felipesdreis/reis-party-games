@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Coleção de party games web, um por subpasta (`mimica/`, `ito/`, `batata-quente/`, ...). Cada jogo é standalone: HTML+CSS+JS puro, **sem build, sem backend, sem dependências**, pensado para um único dispositivo passado de mão em mão (pass-the-phone / hot-seat), abrindo direto no navegador ou via GitHub Pages.
 
-`mimica/` é o jogo de referência (padrão original). `mimica/`, `ito/` e `batata-quente/` já estão implementados e completos — todo jogo novo deve seguir exatamente o mesmo padrão de arquitetura a menos que o usuário peça algo diferente.
+`mimica/` e `ito/`  são os jogos de referência (padrão original). 
 
 ## Hub (index.html na raiz)
 

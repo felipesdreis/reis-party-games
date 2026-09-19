@@ -318,12 +318,14 @@ function nightState() {
   assert.equal(s2.screen, 'dayResult');
 }
 
-// isOver/winner: três cenários do YAGNI da spec
+// isOver/winner: cenários da spec (empate e maioria vencem pra mafia; mafia zerada vence pra cidade;
+// medico+investigador eliminados vence pra mafia mesmo em minoria)
 {
-  // empate: 2 mafiosos vivos, 2 não-mafiosos vivos → falso (precisa SUPERAR, empate não basta)
+  // empate: 2 mafiosos vivos, 2 não-mafiosos vivos → verdadeiro, mafia vence (empate já basta)
   const tie = { roles: ['mafioso', 'mafioso', 'medico', 'investigador', 'cidadao', 'cidadao'],
     alive: [true, true, true, true, false, false] };
-  assert.equal(g.isOver(tie), false, 'empate não basta');
+  assert.equal(g.isOver(tie), true, 'empate já basta');
+  assert.equal(g.winner(tie), 'mafia');
 
   // maioria: 2 mafiosos vivos, 1 não-mafioso vivo → verdadeiro, mafia vence
   const majority = { roles: ['mafioso', 'mafioso', 'medico', 'investigador', 'cidadao', 'cidadao'],
@@ -336,6 +338,17 @@ function nightState() {
     alive: [false, false, false, false, true, false] };
   assert.equal(g.isOver(zeroed), true);
   assert.equal(g.winner(zeroed), 'cidade');
+
+  // medico e investigador mortos, mafia ainda em minoria (1 vivo vs 3 cidadãos vivos) → mafia vence
+  const noProtectors = { roles: ['mafioso', 'mafioso', 'medico', 'investigador', 'cidadao', 'cidadao'],
+    alive: [true, false, false, false, true, true] };
+  assert.equal(g.isOver(noProtectors), true, 'medico e investigador eliminados encerra o jogo');
+  assert.equal(g.winner(noProtectors), 'mafia');
+
+  // só o médico morto (investigador vivo) → jogo continua normalmente
+  const onlyMedicoDead = { roles: ['mafioso', 'mafioso', 'medico', 'investigador', 'cidadao', 'cidadao'],
+    alive: [true, false, false, true, true, true] };
+  assert.equal(g.isOver(onlyMedicoDead), false, 'investigador ainda vivo, jogo continua');
 }
 
 // toDay / toNextNight: decidem entre gameOver e a próxima fase

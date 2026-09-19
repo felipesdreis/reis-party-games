@@ -25,7 +25,7 @@ O app tem **duas fases de uso do celular** bem separadas:
 | Resultado da investigação | Binário "pessoa importante" = mafioso OU médico (não diferencia qual). App mostra isso só pro host; o host sinaliza com um **joinha físico** pro investigador, fora do app — o investigador nunca sabe se é mafioso ou médico, só que é "importante" |
 | Votação do dia | 100% verbal/física; o host só toca no nome de quem foi expulso, ou em "Ninguém foi expulso" se o grupo empatar/decidir não expulsar — igual ao padrão de eliminação do `batata-quente` |
 | Revelar papel ao morrer | Sempre — tanto na morte da noite quanto na expulsão do dia, o app mostra o papel de quem saiu |
-| Condição de vitória | Máfia vence quando `mafiosos vivos > não-mafiosos vivos` (precisa **superar**, empate não basta). Cidade vence quando `mafiosos vivos == 0` |
+| Condição de vitória | Máfia vence quando `mafiosos vivos >= não-mafiosos vivos` (empate já basta) ou quando médico e investigador estão ambos mortos, mesmo em minoria. Cidade vence quando `mafiosos vivos == 0` |
 | Narração | Cada tela de fase mostra um roteiro pronto pro host ler em voz alta, além dos controles |
 | Timer | Não há — nem na revelação nem na discussão do dia, igual ito/mimica sem pressa artificial |
 | Stack | HTML + CSS + JS puro, PT-BR, sem backend. Única dependência: `qrcode-generator`, vendorizada em `cidade-dorme/vendor/`, copiada sem alterações do `ito/vendor/qrcode.js` |
@@ -111,7 +111,7 @@ Todas recebem `state`, mutam e retornam o mesmo objeto. Sem classes.
 | `toNextNight(state)` | Handler do botão em `dayResult`: se `isOver(state)` → `screen = 'gameOver'`; senão `startNight(state)` |
 | `aliveIndices(state)` | Array de índices com `alive[i] === true` |
 | `mafiaTargetChoices(state)` | `aliveIndices` excluindo os próprios mafiosos (não se matam entre si) |
-| `isOver(state)` | `mafiaAlive > othersAlive \|\| mafiaAlive === 0`, contando só `alive` |
+| `isOver(state)` | `mafiaAlive === 0 \|\| mafiaAlive >= othersAlive \|\| (!roleAlive('medico') && !roleAlive('investigador'))`, contando só `alive` |
 | `winner(state)` | `mafiaAlive === 0 ? 'cidade' : 'mafia'` |
 
 Última linha: `if (typeof module !== 'undefined') module.exports = { ... }`.
@@ -174,7 +174,7 @@ Parte de `ito/style.css` (tokens oklch/Inter, `.chip`, `.avatar`). Adições: `.
   3. Noite: tocar num nome na fase máfia avança pra médico; escolher alguém avança pra investigador; tocar num nome na fase investigador mostra o card de resultado (joinha ou não) sem trocar de tela; "Investigador dormiu, continuar" só então avança pra `nightResult`.
   4. Se o alvo da máfia === alvo do médico → "Ninguém morreu esta noite"; se diferente → "{nome} foi encontrado morto. Era {papel}.".
   5. Dia: tocar num nome vivo expulsa e revela o papel; "Ninguém foi expulso" não mexe em `alive`.
-  6. Repetir noites até `mafiaAlive === 0` (cidade vence) ou `mafiaAlive > othersAlive` (máfia vence, empate não é suficiente) → `gameOver` com todos os papéis revelados.
+  6. Repetir noites até `mafiaAlive === 0` (cidade vence) ou `mafiaAlive >= othersAlive` (máfia vence, empate já é suficiente) ou médico e investigador ambos mortos (máfia vence mesmo em minoria) → `gameOver` com todos os papéis revelados.
   7. "Jogar de novo" volta ao setup com os mesmos 6 nomes já nos chips, prontos pra sortear de novo.
   8. DevTools mobile (390px): grade de nomes tocável com o polegar, roteiro legível.
 - Modo QR (precisa de URL acessível, `npx serve` ou GitHub Pages): setup "Cada um no seu" → tela share com QR → escanear em outro celular → escolher o próprio nome → ver o papel (mafioso vê o parceiro certo) → "Todos viram, continuar" no host segue pra `night` normalmente (o convidado só via o papel, não participa da noite/dia).
